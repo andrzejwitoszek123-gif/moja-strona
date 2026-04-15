@@ -6,10 +6,12 @@
 
     <style>
         body {
-            text-align: center;
-            margin-top: 20%;
+            margin: 0;
+            overflow: hidden;
             font-family: Arial, sans-serif;
-            background-color: white;
+            background: black;
+            color: white;
+            text-align: center;
         }
 
         h1 {
@@ -19,7 +21,6 @@
 
         p {
             font-size: 20px;
-            font-weight: normal;
             animation: colors 3s infinite;
         }
 
@@ -30,23 +31,89 @@
             75% { color: cyan; }
             100% { color: red; }
         }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
     </style>
 </head>
 <body>
 
-<h1>System wiederhergestellt</h1>
-<p>GRATULACJE </p>
-<p>Udało się!</p>
-    
+<canvas id="fireworks"></canvas>
+
+<div class="content">
+    <h1>System wiederhergestellt</h1>
+    <p>Gratulacje udało się!</p>
+</div>
+
 <audio id="audio">
     <source src="muzyka.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+// 🔊 audio po kliknięciu
 document.addEventListener("click", function() {
-    var audio = document.getElementById("audio");
-    audio.play();
+    document.getElementById("audio").play();
 }, { once: true });
+
+// 🎆 fajerwerki
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function createFirework() {
+    let x = Math.random() * canvas.width;
+    let y = Math.random() * canvas.height / 2;
+
+    for (let i = 0; i < 50; i++) {
+        particles.push({
+            x: x,
+            y: y,
+            dx: (Math.random() - 0.5) * 5,
+            dy: (Math.random() - 0.5) * 5,
+            life: 100
+        });
+    }
+}
+
+function update() {
+    ctx.fillStyle = "rgba(0,0,0,0.2)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, index) => {
+        p.x += p.dx;
+        p.y += p.dy;
+        p.life--;
+
+        ctx.fillStyle = `hsl(${Math.random()*360},100%,50%)`;
+        ctx.fillRect(p.x, p.y, 2, 2);
+
+        if (p.life <= 0) {
+            particles.splice(index, 1);
+        }
+    });
+
+    requestAnimationFrame(update);
+}
+
+// co jakiś czas wybuch
+setInterval(createFirework, 800);
+
+update();
 </script>
 
 </body>
