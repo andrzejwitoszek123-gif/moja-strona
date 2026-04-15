@@ -3,10 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Moja strona</title>
+
+    <style>
+        body {
+            text-align: center;
+            margin-top: 20%;
+            font-family: Arial, sans-serif;
+            background-color: black;
+        }
+
+        h1 {
+            font-size: 40px;
+            animation: colors 3s infinite;
+        }
+
+        p {
+            font-size: 20px;
+            font-weight: normal;
+            animation: colors 3s infinite;
+        }
+
+        @keyframes colors {
+            0% { color: red; }
+            25% { color: yellow; }
+            50% { color: lime; }
+            75% { color: cyan; }
+            100% { color: red; }
+        }
+    </style>
 </head>
 <body>
 
-<h1>Witaj na mojej stronie</h1>
+<h1>System wiederhergestellt</h1>
+<p>Gratulacje udało się!</p>
 
 <audio id="audio">
     <source src="muzyka.mp3" type="audio/mpeg">
@@ -16,7 +45,7 @@
 document.addEventListener("click", function() {
     var audio = document.getElementById("audio");
     audio.play();
-}, { once: true }); // wykona się tylko raz
+}, { once: true });
 </script>
 
 </body>
