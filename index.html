@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <title>Moja strona</title>
 </head>
-<body>
-    <h1>Kocham Asie !</h1>
+<body onclick="startAudio()" style="cursor:pointer;">
+
+<h1>Kliknij gdziekolwiek aby rozpocząć</h1>
+
+<audio id="audio">
+    <source src="muzyka.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function startAudio() {
+    var audio = document.getElementById("audio");
+    audio.play();
+    document.body.onclick = null; // tylko raz
+}
+</script>
+
 </body>
 </html>
